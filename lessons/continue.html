@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Continue Statement Exercise</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            padding: 20px; 
+            background-color: #f4f4f4;
+        }
+        .container { 
+            width: 60%; 
+            margin: auto; 
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0px 0px 10px gray;
+        }
+        h2 {
+            font-size: 28px;
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .question {
+            font-size: 20px;
+            font-weight: bold;
+            background-color: yellow;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+        .code { 
+            background-color: black; 
+            color: white; 
+            padding: 10px; 
+            border-radius: 5px; 
+            text-align: left; 
+            font-family: 'Courier New', monospace;
+        }
+        .input-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        input { 
+            padding: 10px; 
+            font-size: 16px; 
+            border-radius: 5px; 
+            border: 2px solid #007bff; 
+            outline: none;
+        }
+        button { 
+            display: none; /* Initially hidden */
+            margin-left: 10px;
+            padding: 10px; 
+            font-size: 16px; 
+            background: #28a745; 
+            color: white; 
+            border: none; 
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .correct { 
+            color: green; 
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .wrong { 
+            color: red; 
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .hint {
+            color: orange;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        #output span {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🎨 Interactive Learning: Continue Statement in Loops</h2>
+
+        <p class="question">Predict the output:</p>
+        
+        <div class="code">
+            for (int i = 1; i <= 9; i = i + 2) { <br>
+            &nbsp;&nbsp;&nbsp;if (i == 3 || i == 7) { <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue; <br>
+            &nbsp;&nbsp;&nbsp;} <br>
+            &nbsp;&nbsp;&nbsp;std::cout << i << " "; <br>
+            }
+        </div>
+
+        <div class="input-section">
+            <label for="userAnswer"><strong>💡 Your Answer:</strong></label>
+            <input type="text" id="userAnswer" placeholder="Enter numbers separated by space" oninput="showButton()">
+        </div>
+
+        <button id="checkBtn" onclick="checkAnswer()">Check Answer</button>
+
+        <p id="feedback"></p>
+
+        <h3>💻 Actual Execution:</h3>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function showButton() {
+            let input = document.getElementById("userAnswer").value.trim();
+            let button = document.getElementById("checkBtn");
+            if (input !== "") {
+                button.style.display = "inline-block"; // Show button when user types
+            } else {
+                button.style.display = "none"; // Hide if input is empty
+            }
+        }
+
+        function checkAnswer() {
+            let userInput = document.getElementById("userAnswer").value.trim();
+            let correctOutput = "1 5 9"; // Expected answer
+            let feedback = document.getElementById("feedback");
+
+            // Normalize input (remove extra spaces and format correctly)
+            let normalizedInput = userInput.split(/\s+/).join(" "); 
+
+            if (normalizedInput === correctOutput) {
+                feedback.innerHTML = "🎉✅ Great job! You understood the continue statement!";
+                feedback.className = "correct";
+            } else {
+                if (userInput.replace(/\s/g, '') === correctOutput.replace(/\s/g, '')) {
+                    feedback.innerHTML = "⚠️ Hint: Separate numbers with a space!";
+                    feedback.className = "hint";
+                } else {
+                    feedback.innerHTML = "❌ Incorrect. Try again! Look at the skipped numbers carefully.";
+                    feedback.className = "wrong";
+                }
+            }
+
+            runLoop();
+        }
+
+        function runLoop() {
+            let outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = ""; // Clear previous output
+
+            let numbers = [1, 3, 5, 7, 9];
+            let index = 0;
+
+            function step() {
+                if (index >= numbers.length) return; // Stop when done
+
+                let numDiv = document.createElement("span");
+                
+                if (numbers[index] === 3 || numbers[index] === 7) {
+                    numDiv.style.color = "red";
+                    numDiv.innerHTML = numbers[index] + " (skipped) ";
+                } else {
+                    numDiv.style.color = "green";
+                    numDiv.innerHTML = numbers[index] + " ";
+                }
+
+                outputDiv.appendChild(numDiv);
+                index++;
+                setTimeout(step, 1000);
+            }
+
+            step(); // Start execution
+        }
+    </script>
+</body>
+</html>

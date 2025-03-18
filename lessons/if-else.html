@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive If-Else Traffic Light</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20px;
+            background: #f4f4f4;
+        }
+        .code-box {
+            background: #222;
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: left;
+            font-family: monospace;
+            font-size: 16px;
+            width: 400px;
+            margin: auto;
+        }
+        .highlight {
+            background: yellow;
+            color: black;
+        }
+        .traffic-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 200px;
+        }
+        .traffic-light {
+            width: 80px;
+            background: black;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .light {
+            width: 50px;
+            height: 50px;
+            margin: 5px auto;
+            border-radius: 50%;
+            background: gray;
+        }
+        .road {
+            width: 100%;
+            height: 10px;
+            background: black;
+            margin-top: 20px;
+            position: relative;
+        }
+        .car {
+            width: 60px;
+            height: 30px;
+            background: blue;
+            position: absolute;
+            left: -70px;
+            border-radius: 5px;
+            display: none;
+            transition: left 5s linear;
+        }
+    </style>
+</head>
+<body>
+    <h2>Understanding If-Else with Traffic Light 🚦</h2>
+    
+    <div class="code-box">
+        <pre id="code">
+<span id="if-part">if</span> (signal == "<span id="if-value">red</span>") {
+    <span id="if-message">console.log("Cars must stop!");</span>
+} <span id="else-part">else</span> {
+    <span id="else-message">console.log("Cars can go!");</span>
+}
+        </pre>
+    </div>
+    
+    <div class="traffic-container">
+        <div class="traffic-light">
+            <div id="red" class="light"></div>
+            <div id="green" class="light"></div>
+        </div>
+    </div>
+    
+    <p id="output"></p>
+    <div class="road">
+        <div class="car" id="car"></div>
+    </div>
+
+    <script>
+        function playSound(type) {
+            let sound = new Audio(type === 'brake' ? 'brake.mp3' : 'engine.mp3');
+            sound.play();
+        }
+
+        function runTrafficSimulation() {
+            let redLight = document.getElementById("red");
+            let greenLight = document.getElementById("green");
+            let output = document.getElementById("output");
+            let ifPart = document.getElementById("if-part");
+            let elsePart = document.getElementById("else-part");
+            let ifMessage = document.getElementById("if-message");
+            let elseMessage = document.getElementById("else-message");
+            let ifValue = document.getElementById("if-value");
+            let car = document.getElementById("car");
+
+            car.style.display = "none"; // Hide car initially
+            setTimeout(() => {
+                ifPart.classList.add("highlight");
+                ifValue.classList.add("highlight");
+                ifMessage.classList.add("highlight");
+                redLight.style.background = "red";
+                greenLight.style.background = "gray";
+                output.innerText = "Traffic signal is red. Cars must stop!";
+                let speech = new SpeechSynthesisUtterance(output.innerText);
+                window.speechSynthesis.speak(speech);
+                setTimeout(() => {
+                    car.style.display = "block"; // Car appears and stops
+                    car.style.left = "40%";
+                    playSound('brake');
+                }, 1500);
+            }, 1000);
+            
+            setTimeout(() => {
+                ifPart.classList.remove("highlight");
+                ifValue.classList.remove("highlight");
+                ifMessage.classList.remove("highlight");
+                elsePart.classList.add("highlight");
+                elseMessage.classList.add("highlight");
+                redLight.style.background = "gray";
+                greenLight.style.background = "green";
+                output.innerText = "Traffic signal is green. Cars can go!";
+                let speech = new SpeechSynthesisUtterance(output.innerText);
+                window.speechSynthesis.speak(speech);
+                setTimeout(() => {
+                    car.style.left = "100%"; // Car moves away
+                    playSound('engine');
+                }, 1500);
+            }, 6000);
+            
+            setTimeout(() => {
+                car.style.display = "none"; // Car disappears, restarting process
+                car.style.left = "-70px";
+                elsePart.classList.remove("highlight");
+                elseMessage.classList.remove("highlight");
+                runTrafficSimulation(); // Restart loop
+            }, 12000);
+        }
+        
+        runTrafficSimulation();
+    </script>
+</body>
+</html>

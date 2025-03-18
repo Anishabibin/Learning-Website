@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Singly Linked List Visualization</title>
+    <style>
+        #listContainer {
+            border: 2px solid #ccc;
+            min-height: 80px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .node {
+            padding: 20px;
+            margin: 10px;
+            background-color: #e0f7fa;
+            border: 1px solid #b2ebf2;
+            text-align: center;
+            position: relative;
+        }
+
+        .node::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            width: 17px;
+            height: 2px;
+            background-color: black;
+            transform-origin: left;
+            transform: translateY(-1px);
+        }
+
+        .node::before{
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 10px solid black;
+            transform: translateX(10px) translateY(-5px);
+        }
+
+        .node:last-child::after {
+            display: none;
+        }
+        .node:last-child::before {
+            display: none;
+        }
+
+        .highlighted {
+            background-color: #ffeb3b;
+        }
+
+        #controls {
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #insertBtn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #deleteBtn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        #traverseBtn {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        #isEmptyBtn {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        #sizeBtn {
+            background-color: #9c27b0;
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        #message{
+            text-align: center;
+            margin-bottom: 10px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Singly Linked List Operations</h1>
+    <div id="message"></div>
+    <div id="listContainer"></div>
+    <div id="controls">
+        <button id="insertBtn">insert()</button>
+        <button id="deleteBtn">delete()</button>
+        <button id="traverseBtn">traverse()</button>
+        <button id="isEmptyBtn">isEmpty()</button>
+        <button id="sizeBtn">size()</button>
+    </div>
+
+    <script>
+        let list = [];
+        const listContainer = document.getElementById('listContainer');
+        const insertBtn = document.getElementById('insertBtn');
+        const deleteBtn = document.getElementById('deleteBtn');
+        const traverseBtn = document.getElementById('traverseBtn');
+        const isEmptyBtn = document.getElementById('isEmptyBtn');
+        const sizeBtn = document.getElementById('sizeBtn');
+        const messageDisplay = document.getElementById('message');
+
+        function updateDisplay() {
+            listContainer.innerHTML = '';
+            list.forEach(value => {
+                const node = document.createElement('div');
+                node.className = 'node';
+                node.textContent = value;
+                listContainer.appendChild(node);
+            });
+            messageDisplay.textContent = "";
+        }
+
+        insertBtn.addEventListener('click', () => {
+            const value = prompt("Enter value to insert:");
+            if (value !== null && value.trim() !== "") {
+                list.push(value);
+                updateDisplay();
+            } else if(value !== null) {
+                messageDisplay.textContent = "Please enter a valid value.";
+            }
+        });
+
+        deleteBtn.addEventListener('click', () => {
+            const index = prompt("Enter index to delete (0-based):");
+            if (index !== null && !isNaN(index) && index >= 0 && index < list.length) {
+                list.splice(index, 1);
+                updateDisplay();
+            } else if (index !== null) {
+                messageDisplay.textContent = "Invalid index.";
+            }
+        });
+
+        traverseBtn.addEventListener('click', () => {
+            if (list.length > 0) {
+                let index = 0;
+                function highlightNode() {
+                    if (index < list.length) {
+                        const node = listContainer.children[index];
+                        node.classList.add('highlighted');
+                        setTimeout(() => {
+                            node.classList.remove('highlighted');
+                            index++;
+                            highlightNode();
+                        }, 1000);
+                    }
+                }
+                highlightNode();
+            } else {
+                messageDisplay.textContent = "List is empty.";
+            }
+        });
+
+        isEmptyBtn.addEventListener('click', () => {
+            alert(`Is Empty: ${list.length === 0}`);
+        });
+
+        sizeBtn.addEventListener('click', () => {
+            alert(`Size: ${list.length}`);
+        });
+
+        updateDisplay();
+    </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Queue</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #3498db; /* Modern blue background */
+            background-image: linear-gradient(to bottom, #3498db, #2980b9); /* Gradient effect */
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        input {
+            width: 100%;
+            height: 30px;
+            padding: 5px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+        }
+
+        #enqueue {
+            background-color: #4CAF50; /* Green for Enqueue */
+            color: white;
+        }
+
+        #dequeue {
+            background-color: #E74C3C; /* Red for Dequeue */
+            color: white;
+        }
+
+        #peek {
+            background-color: #03A9F4; /* Blue for Peek */
+            color: white;
+        }
+
+        #isEmpty {
+            background-color: #FF9800; /* Orange for Is Empty */
+            color: white;
+        }
+
+        #size {
+            background-color: #8BC34A; /* Light Green for Size */
+            color: white;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Linear Queue</h1>
+        <div>
+            <label for="enqueueValue">Value to enqueue:</label>
+            <input type="text" id="enqueueValue">
+            <button id="enqueue">Enqueue</button>
+        </div>
+        <div id="queueDisplay" style="font-size: 18px; margin-bottom: 20px;"></div>
+
+        <div>
+            <button id="dequeue">Dequeue</button>
+            <button id="peek">Peek</button>
+            <button id="isEmpty">Is Empty</button>
+            <button id="size">Size</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        let queue = [];
+
+        document.getElementById('enqueue').addEventListener('click', function() {
+            const value = parseInt(document.getElementById('enqueueValue').value);
+            if (!isNaN(value)) {
+                queue.push(value);
+                document.getElementById('queueDisplay').innerText = `Queue: [${queue.join(', ')}]`;
+                document.getElementById('result').innerText = `Enqueued ${value}.`;
+            } else {
+                document.getElementById('result').innerText = 'Invalid input. Please enter a number.';
+            }
+        });
+
+        document.getElementById('dequeue').addEventListener('click', function() {
+            if (queue.length > 0) {
+                const dequeuedValue = queue.shift();
+                document.getElementById('queueDisplay').innerText = `Queue: [${queue.join(', ')}]`;
+                document.getElementById('result').innerText = `Dequeued ${dequeuedValue}.`;
+            } else {
+                document.getElementById('result').innerText = 'Queue is empty. Cannot dequeue.';
+            }
+        });
+
+        document.getElementById('peek').addEventListener('click', function() {
+            if (queue.length > 0) {
+                document.getElementById('result').innerText = `Front element: ${queue[0]}`;
+            } else {
+                document.getElementById('result').innerText = 'Queue is empty.';
+            }
+        });
+
+        document.getElementById('isEmpty').addEventListener('click', function() {
+            if (queue.length === 0) {
+                document.getElementById('result').innerText = 'Queue is empty.';
+            } else {
+                document.getElementById('result').innerText = 'Queue is not empty.';
+            }
+        });
+
+        document.getElementById('size').addEventListener('click', function() {
+            document.getElementById('result').innerText = `Queue size: ${queue.length}`;
+        });
+    </script>
+</body>
+</html>

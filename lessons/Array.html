@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Basics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #3498db; /* Modern blue background */
+            background-image: linear-gradient(to bottom, #3498db, #2980b9); /* Gradient effect */
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        input {
+            width: 100%;
+            height: 30px;
+            padding: 5px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+        }
+
+        #createArray {
+            background-color: #4CAF50; /* Green for Create */
+            color: white;
+        }
+
+        #insertFront {
+            background-color: #03A9F4; /* Blue for Insert Front */
+            color: white;
+        }
+
+        #insertEnd {
+            background-color: #FF9800; /* Orange for Insert End */
+            color: white;
+        }
+
+        #insertAtPosition {
+            background-color: #8BC34A; /* Light Green for Insert Position */
+            color: white;
+        }
+
+        #deleteFront {
+            background-color: #E74C3C; /* Red for Delete Front */
+            color: white;
+        }
+
+        #deleteEnd {
+            background-color: #FF69B4; /* Pink for Delete End */
+            color: white;
+        }
+
+        #deleteAtPosition {
+            background-color: #9B59B6; /* Purple for Delete Position */
+            color: white;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Array Basics</h1>
+        <div>
+            <label for="arrayInput">Enter array elements (comma separated):</label>
+            <input type="text" id="arrayInput" placeholder="e.g., 1,2,3,4,5">
+            <button id="createArray">Create Array</button>
+        </div>
+        <div id="arrayDisplay" style="font-size: 18px; margin-bottom: 20px;"></div>
+
+        <div>
+            <label for="insertValue">Value to insert:</label>
+            <input type="text" id="insertValue">
+            <button id="insertFront">Insert at Front</button>
+            <button id="insertEnd">Insert at End</button>
+            <button id="insertAtPosition">Insert at Position</button>
+            <input type="text" id="insertPosition" placeholder="Position (for insertAtPosition)">
+        </div>
+
+        <div>
+            <button id="deleteFront">Delete from Front</button>
+            <button id="deleteEnd">Delete from End</button>
+            <button id="deleteAtPosition">Delete at Position</button>
+            <input type="text" id="deletePosition" placeholder="Position (for deleteAtPosition)">
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        let array = [];
+
+        document.getElementById('createArray').addEventListener('click', function() {
+            const input = document.getElementById('arrayInput').value;
+            array = input.split(',').map(Number);
+            document.getElementById('arrayDisplay').innerText = `Array: [${array.join(', ')}]`;
+        });
+
+        document.getElementById('insertFront').addEventListener('click', function() {
+            const value = parseInt(document.getElementById('insertValue').value);
+            if (!isNaN(value)) {
+                array.unshift(value);
+                document.getElementById('arrayDisplay').innerText = `Array: [${array.join(', ')}]`;
+                document.getElementById('result').innerText = `Inserted ${value} at the front.`;
+            } else {
+                document.getElementById('result').innerText = 'Invalid input. Please enter a number.';
+            }
+        });
+
+        document.getElementById('insertEnd').addEventListener('click', function() {
+            const value = parseInt(document.getElementById('insertValue').value);
+            if (!isNaN(value)) {
+                array.push(value);
+                document.getElementById('arrayDisplay').innerText = `Array: [${array.join(', ')}]`;
+                document.getElementById('result').innerText = `Inserted ${value} at the end.`;
+            } else {
+                document.getElementById('result').innerText = 'Invalid input. Please enter a number.';
+            }
+        });
+
+        document.getElementById('insertAtPosition').addEventListener('click', function() {
+            const value = parseInt(document.getElementById('insertValue').value);
+            const position = parseInt(document.getElementById('insertPosition').value);
+            if (!isNaN(value) && !isNaN(position) && position >= 0 && position <= array.length) {
+                array.splice(position, 0, value);
+                document.getElementById('arrayDisplay').innerText = `Array: [${array.join(', ')}]`;
+                document.getElementById('result').innerText = `Inserted ${value} at position ${position}.`;
+            } else {
+                document.getElementById('result').innerText = 'Invalid input. Please enter valid position and value.';
+            }
+        });
+
+        document.getElementById('deleteFront').addEventListener('click', function() {
+            if (array.length > 0) {
+                const deletedValue = array.shift();
+                document.getElementById('arrayDisplay').innerText = `Array: [${array.join(', ')}]`;
+                document.getElementById('result').innerText = `Deleted ${deletedValue} from the front.`;
+            } else {
+                document.getElementById('result').innerText = 'Array is empty. Cannot delete.';
+            }
+        });
+
+        document.getElementById('deleteEnd').addEventListener('click', function() {
+            if (array.length > 0) {
+                const deletedValue = array.pop();
+                document.getElementById('arrayDisplay').innerText = `Array: [${array.join(', ')}]`;
+                document.getElementById('result').innerText = `Deleted ${deletedValue} from the end.`;
+            } else {
+                document.getElementById('result').innerText = 'Array is empty. Cannot delete.';
+            }
+        });
+
+        document.getElementById('deleteAtPosition').addEventListener('click', function() {
+            const position = parseInt(document.getElementById('deletePosition').value);
+            if (!isNaN(position) && position >= 0 && position < array.length) {
+                const deletedValue = array.splice(position, 1)[0];
+                document.getElementById('arrayDisplay').innerText = `Array: [${array.join(', ')}]`;
+                document.getElementById('result').innerText = `Deleted ${deletedValue} from position ${position}.`;
+            } else {
+                document.getElementById('result').innerText = 'Invalid input. Please enter valid position.';
+            }
+        });
+    </script>
+</body>
+</html>

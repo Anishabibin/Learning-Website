@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stack Visualization</title>
+    <style>
+        #stackContainer {
+            border: 2px solid #ccc;
+            width: 150px;
+            height: 300px;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+        }
+
+        .stackElement {
+            width: 90%;
+            padding: 10px;
+            margin: 5px;
+            background-color: #e0f7fa;
+            border: 1px solid #b2ebf2;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        #controls {
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #pushBtn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #popBtn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        #peekBtn {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        #isEmptyBtn {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        #sizeBtn {
+            background-color: #9c27b0;
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stack Operations</h1>
+    <div id="stackContainer"></div>
+    <div id="controls">
+        <button id="pushBtn">push()</button>
+        <button id="popBtn" disabled>pop()</button>
+        <button id="peekBtn" disabled>Top()</button>
+        <button id="isEmptyBtn">isEmpty()</button>
+        <button id="sizeBtn">size()</button>
+    </div>
+
+    <script>
+        const stack = [];
+        const stackContainer = document.getElementById('stackContainer');
+        const pushBtn = document.getElementById('pushBtn');
+        const popBtn = document.getElementById('popBtn');
+        const peekBtn = document.getElementById('peekBtn');
+        const isEmptyBtn = document.getElementById('isEmptyBtn');
+        const sizeBtn = document.getElementById('sizeBtn');
+
+        function updateDisplay() {
+            stackContainer.innerHTML = '';
+            stack.forEach(value => {
+                const element = document.createElement('div');
+                element.className = 'stackElement';
+                element.textContent = value;
+                stackContainer.appendChild(element);
+            });
+            popBtn.disabled = stack.length === 0;
+            peekBtn.disabled = stack.length === 0;
+        }
+
+        pushBtn.addEventListener('click', () => {
+            const value = prompt("Enter value to push:");
+            if (value !== null) {
+                stack.push(value);
+                updateDisplay();
+            }
+        });
+
+        popBtn.addEventListener('click', () => {
+            if (stack.length > 0) {
+                const poppedValue = stack.pop();
+                alert(`Popped: ${poppedValue}`);
+                updateDisplay();
+            }
+        });
+
+        peekBtn.addEventListener('click', () => {
+            if (stack.length > 0) {
+                alert(`Peek: ${stack[stack.length - 1]}`);
+            }
+        });
+
+        isEmptyBtn.addEventListener('click', () => {
+            alert(`Is Empty: ${stack.length === 0}`);
+        });
+
+        sizeBtn.addEventListener('click', () => {
+            alert(`Size: ${stack.length}`);
+        });
+
+        updateDisplay(); // Initial display
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Else-If Ladder Animation</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; padding: 20px; }
+        .container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px gray; width: 60%; margin: auto; }
+        .code-block { background: black; color: white; padding: 10px; border-radius: 5px; text-align: left; font-family: 'Courier New', monospace; position: relative; }
+        .highlight { background: yellow; color: black; font-weight: bold; }
+        .output { margin-top: 20px; font-size: 18px; font-weight: bold; }
+        .btn { padding: 10px 20px; font-size: 16px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .btn:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🚀 Understanding the If-Else-If Ladder</h2>
+        <p><strong>🔹 Given a score, determine the grade using an if-else-if ladder.</strong></p>
+        
+        <div class="code-block" id="code">
+            int score = 85; <br>
+            <span id="if1">if (score >= 90) {</span> <br>
+            &nbsp;&nbsp;&nbsp;cout << "Grade: A"; <br>
+            } <br>
+            <span id="if2">else if (score >= 75) {</span> <br>
+            &nbsp;&nbsp;&nbsp;cout << "Grade: B"; <br>
+            } <br>
+            <span id="if3">else if (score >= 50) {</span> <br>
+            &nbsp;&nbsp;&nbsp;cout << "Grade: C"; <br>
+            } <br>
+            <span id="if4">else {</span> <br>
+            &nbsp;&nbsp;&nbsp;cout << "Grade: F"; <br>
+            } <br>
+        </div>
+
+        <button class="btn" onclick="runAnimation()">Run Animation</button>
+
+        <p class="output" id="output"></p>
+    </div>
+
+    <script>
+        function runAnimation() {
+            let steps = [
+                { element: "if1", condition: "85 >= 90 (false)", execute: false },
+                { element: "if2", condition: "85 >= 75 (true)", execute: true, message: "Grade: B" },
+                { element: "if3", condition: "Skipped", execute: false },
+                { element: "if4", condition: "Skipped", execute: false }
+            ];
+            
+            let i = 0;
+            let outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = "";
+
+            function step() {
+                if (i >= steps.length) return;
+
+                let codeLine = document.getElementById(steps[i].element);
+                codeLine.classList.add("highlight");
+
+                outputDiv.innerHTML += `Checking: ${steps[i].condition} <br>`;
+
+                setTimeout(() => {
+                    if (steps[i].execute) {
+                        outputDiv.innerHTML += `<strong>✅ Condition met: ${steps[i].message}</strong>`;
+                        return;
+                    } else {
+                        codeLine.classList.remove("highlight");
+                        i++;
+                        step();
+                    }
+                }, 1500);
+            }
+
+            step();
+        }
+    </script>
+</body>
+</html>

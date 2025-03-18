@@ -15,22 +15,45 @@
             margin: auto;
             padding: 20px;
         }
+        .caption {
+            font-size: 20px;
+            font-weight: bold;
+            color: blue;
+            margin-bottom: 10px;
+        }
         .track {
             width: 600px;
-            height: 100px;
+            height: 150px;
             border: 2px solid black;
             background-color: lightgray;
             position: relative;
-            margin: 20px auto;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 10px;
         }
         .runner {
-            width: 40px;
-            height: 40px;
-            background-color: red;
+            width: 50px;
+            height: 50px;
             position: absolute;
-            top: 30px;
+            top: 80px;
             left: 10px;
-            border-radius: 50%;
+            transition: left 0.5s ease, top 0.3s ease-in-out;
+        }
+        .goal {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            top: 80px;
+            right: 10px;
+        }
+        .obstacle {
+            width: 30px;
+            height: 30px;
+            background: red;
+            position: absolute;
+            top: 90px;
+            left: 300px;
+            border-radius: 5px;
         }
         .editor-container {
             text-align: left;
@@ -41,14 +64,20 @@
             border-radius: 5px;
             color: white;
         }
-        textarea {
-            width: 100%;
-            height: 80px;
+        pre {
             font-family: monospace;
             background: #272822;
             color: white;
-            border: none;
-            resize: none;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: left;
+        }
+        .highlight {
+            background-color: yellow;
+            color: black;
+            font-weight: bold;
+            padding: 2px;
+            border-radius: 3px;
         }
         .btn {
             padding: 10px;
@@ -59,45 +88,127 @@
             border-radius: 5px;
             margin-top: 10px;
         }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
     <h1>🏃‍♂️ Loop Runner Game 🏁</h1>
-    <p>Edit the loop to make the character reach the finish line!</p>
+    <p>Edit the loop to make the runner jump over obstacles and reach the goal!</p>
 
     <div class="game-container">
+        <div class="caption" id="caption">🔄 Loop running: i = 0</div>
+
         <div class="track">
-            <div id="runner" class="runner"></div>
+            <img id="runner" class="runner" src="https://i.imgur.com/ZU8XTrM.png" alt="Runner">
+            <div class="obstacle"></div>
+            <img class="goal" src="https://i.imgur.com/Z4x1Xpa.png" alt="Finish Line">
         </div>
-        
+
         <div class="editor-container">
-            <h3>📝 Edit the Loop:</h3>
-            <textarea id="codeEditor">
-for (let i = 0; i < 5; i++) {  
-    moveRight();  
+            <h3>📝 Loop Code (Watch for Highlights!):</h3>
+            <pre id="codeEditor">
+for (let i = 0; i < 10; i++) {  
+    <span id="line1">if (i === 5) {</span>  
+        <span id="line2">jump();</span>  
+    }  
+    <span id="line3">moveRight(i);</span>  
 }
-            </textarea>
+            </pre>
             <button class="btn" onclick="runCode()">Run Code</button>
         </div>
     </div>
 
+    <div class="popup" id="popup">
+        <h2>🏆 Congratulations! 🏆</h2>
+        <p>You completed the loop successfully! 🎉</p>
+        <button class="btn" onclick="restartGame()">Play Again</button>
+    </div>
+
+    <audio id="jumpSound" src="https://www.fesliyanstudios.com/play-mp3/276"></audio>
+    <audio id="winSound" src="https://www.fesliyanstudios.com/play-mp3/4381"></audio>
+
     <script>
-        function moveRight() {
+        function moveRight(i, callback) {
             let runner = document.getElementById("runner");
             let currentPosition = parseInt(runner.style.left) || 10;
-            runner.style.left = (currentPosition + 50) + "px";
+            let newPosition = currentPosition + 50;
+
+            if (newPosition < 550) {
+                runner.style.transition = "left 0.5s ease";
+                runner.style.left = newPosition + "px";
+                document.getElementById("caption").innerHTML = `🔄 Loop running: i = ${i}`;
+                setTimeout(callback, 500);
+            } else {
+                document.getElementById("caption").innerHTML = "🏆 You reached the goal!";
+                showCelebration();
+            }
+        }
+
+        function jump() {
+            let runner = document.getElementById("runner");
+            let jumpSound = document.getElementById("jumpSound");
+
+            jumpSound.play();
+            runner.style.transition = "top 0.3s ease-in-out";
+            runner.style.top = "30px"; // Jump up
+
+            setTimeout(() => {
+                runner.style.top = "80px"; // Back down
+            }, 300);
+        }
+
+        function highlightLine(lineId) {
+            document.getElementById(lineId).classList.add("highlight");
+            setTimeout(() => {
+                document.getElementById(lineId).classList.remove("highlight");
+            }, 600);
         }
 
         function runCode() {
-            let code = document.getElementById("codeEditor").value;
-            document.getElementById("runner").style.left = "10px"; // Reset position
+            let i = 0;
+            document.getElementById("runner").style.left = "10px"; 
+            document.getElementById("caption").innerHTML = "🔄 Loop running: i = 0";
 
-            try {
-                eval(code); // Execute user input
-            } catch (error) {
-                alert("❌ Error in your code: " + error.message);
+            function executeLoop() {
+                if (i < 10) {
+                    if (i === 5) {
+                        highlightLine("line1");
+                        highlightLine("line2");
+                        jump();
+                    }
+                    highlightLine("line3");
+                    moveRight(i, executeLoop);
+                    i++;
+                } else {
+                    document.getElementById("caption").innerHTML = "🏆 Finished! You completed the loop!";
+                }
             }
+            executeLoop();
+        }
+
+        function showCelebration() {
+            setTimeout(() => {
+                document.getElementById("popup").style.display = "block";
+                document.getElementById("winSound").play();
+            }, 500);
+        }
+
+        function restartGame() {
+            document.getElementById("runner").style.left = "10px";
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("caption").innerHTML = "🔄 Loop running: i = 0";
         }
     </script>
 

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loop and Continue Visualization</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; text-align: center; padding: 20px; }
+        .container { display: flex; height: 100vh; }
+        .section { flex: 1; padding: 20px; }
+        .left { background-color: #f4f4f4; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .right { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+
+        .number { display: inline-block; width: 50px; height: 50px; line-height: 50px; 
+                  border-radius: 5px; margin: 5px; font-weight: bold; font-size: 20px; opacity: 0; transition: opacity 0.5s ease-in; }
+        .skipped { background-color: lightcoral; color: white; }
+        .printed { background-color: lightgreen; color: black; }
+
+        #code-snippet { background-color: black; color: white; text-align: left; padding: 15px; 
+                        border-radius: 5px; font-family: 'Courier New', monospace; white-space: pre; 
+                        width: 80%; overflow-x: auto; }
+        .highlight { background-color: yellow; color: black; }
+
+        button { background-color: #007BFF; color: white; padding: 10px 20px; border: none; 
+                 font-size: 16px; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Section: Code Snippet -->
+        <div class="section left">
+            <h2>Code Execution</h2>
+            <pre id="code-snippet">
+<span id="line1">for (int i = 1; i <= 9; i = i + 2) {</span><br>
+<span id="line2">    if (i == 5) {</span><br>
+<span id="line3">        continue;</span><br>
+<span id="line4">    }</span><br>
+<span id="line5">    std::cout << i << " ";</span><br>
+}
+            </pre>
+        </div>
+
+        <!-- Right Section: Output Visualization -->
+        <div class="section right">
+            <h2>Loop Execution</h2>
+            <button onclick="runLoop()">Run Loop</button>
+            <div id="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function highlightLine(line) {
+            document.querySelectorAll("#code-snippet span").forEach(el => el.classList.remove("highlight"));
+            if (line) document.getElementById(line).classList.add("highlight");
+        }
+
+        function runLoop() {
+            let outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = ""; // Clear previous output
+            let numbers = [1, 3, 5, 7, 9];
+            let index = 0;
+
+            function step() {
+                if (index >= numbers.length) {
+                    highlightLine(null); // Remove highlight at end
+                    return; 
+                }
+
+                let numDiv = document.createElement("div");
+                numDiv.classList.add("number");
+                numDiv.textContent = numbers[index];
+
+                highlightLine("line1"); // Highlight loop start
+                setTimeout(() => {
+                    highlightLine("line2"); // Highlight if condition
+                    
+                    if (numbers[index] === 5) {
+                        numDiv.classList.add("skipped");
+                        numDiv.textContent += " (skipped)";
+                        outputDiv.appendChild(numDiv);
+                        numDiv.style.opacity = "1"; // Show skipped number
+                        highlightLine("line3"); // Highlight continue statement
+                        index++;
+                        setTimeout(step, 1000);
+                        return;
+                    }
+
+                    highlightLine("line5"); // Highlight print statement
+                    numDiv.classList.add("printed");
+                    outputDiv.appendChild(numDiv);
+                    setTimeout(() => { numDiv.style.opacity = "1"; }, 100); // Fade in effect
+                    
+                    index++;
+                    setTimeout(step, 1000);
+                }, 1000);
+            }
+
+            step(); // Start the loop
+        }
+    </script>
+</body>
+</html>

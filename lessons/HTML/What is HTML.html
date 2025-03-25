@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is HTML? - Learn HTML</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { padding: 20px; background-color: #f4f4f4; color: #333; }
+
+        .container { 
+            max-width: 900px; 
+            margin: auto; 
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+            text-align: center;
+        }
+
+        h1 { color: #4CAF50; text-align: center; }
+        h2 { margin-top: 20px; color: #333; }
+        p { font-size: 18px; line-height: 1.6; }
+
+        /* Centering the Video */
+        .video-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        iframe {
+            width: 100%;
+            max-width: 500px;
+            height: 280px;
+            border-radius: 10px;
+        }
+
+        /* Centering and styling content boxes */
+        .content-box {
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            background: #fff;
+        }
+
+        .navbar a {
+            display: block;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .navbar a:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .site-window {
+            margin-top: 15px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            background: #fff;
+            min-height: 150px;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+ /* Flexbox for centering the video */
+    .video-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    iframe {
+        width: 560px;
+        height: 315px;
+        border-radius: 10px;
+    }
+
+    /* Flexbox for Hypertext and Markup Example */
+    .example-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .content-box {
+        flex: 1;
+        padding: 20px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        background: #fff;
+        text-align: center;
+    }
+
+    .navbar a {
+        display: inline-block;
+        padding: 10px;
+        background: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 5px;
+    }
+
+    .navbar a:hover {
+        background: #0056b3;
+    }
+ /* Flexbox for Code Editor and Output */
+    .editor-container {
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    /* Code Editor */
+    .editor {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    textarea {
+        width: 100%;
+        height: 200px; /* Increased height */
+        font-family: monospace;
+        font-size: 16px;
+        padding: 10px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        resize: vertical;
+    }
+
+    button {
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #218838;
+    }
+
+    /* Output Window */
+    .output-container {
+        flex: 1;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        background: #fff;
+        min-height: 220px; /* Match textarea height */
+    }
+
+    iframe {
+        width: 100%;
+        height: 200px; /* Increased height */
+        border: none;
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>📚 What is HTML?</h1><br>
+        <p><b>HTML (HyperText Markup Language) is the standard language for creating web pages.</b></p>
+
+<!-- Video Centered -->
+<div class="video-wrapper">
+    <iframe src="https://www.youtube.com/embed/nlL-2A1E5PI?si=ThCKmvduLmlTJXNf" allowfullscreen></iframe>
+</div>
+
+<!-- Hypertext and Markup Example Side by Side -->
+<div class="example-container">
+    <!-- Hypertext Example -->
+    <div class="content-box">
+        <h2>🌍 Hypertext Example</h2>
+        <p>Click the links below to navigate dynamically between pages.</p>
+        <div class="navbar">
+            <a href="#" onclick="changePage('home', event)">🏠 Home</a>
+            <a href="#" onclick="changePage('about', event)">📖 About Us</a>
+            <a href="#" onclick="changePage('contact', event)">📞 Contact</a>
+        </div>
+        <div id="siteWindow">
+            <h3 id="pageTitle"></h3>
+            <p id="pageContent"></p>
+        </div>
+    </div>
+
+    <!-- Markup Example -->
+    <div class="content-box">
+        <h2 align="left">🔤 What is Markup?</h2>
+        <p align="left">Markup <b>structures</b> content.</p>
+        <h3 align="left">Example:</h3>
+        <code>&lt;p&gt;This is a paragraph.&lt;/p&gt;</code>
+        <p align="left"><b>Output:</b></p>
+        <p align="left">This is a paragraph.</p>
+    </div>
+</div>
+
+<h2>💡 Try Writing Your Own HTML Code</h2>
+
+<div class="editor-container">
+    <!-- Code Editor -->
+    <div class="editor">
+        <textarea id="htmlCode"><h1>Welcome to HTML!</h1>
+<p>This is a paragraph.</p></textarea>
+        <button onclick="updatePreview()">Run Code</button>
+    </div>
+
+    <!-- Output Display -->
+    <div class="output-container">
+        <h3>🖥️ Output:</h3>
+        <iframe id="output"></iframe>
+    </div>
+</div>
+
+<script>
+    function updatePreview() {
+        let code = document.getElementById("htmlCode").value;
+        let iframe = document.getElementById("output").contentWindow.document;
+        iframe.open();
+        iframe.write(code);
+        iframe.close();
+    }
+
+
+        function changePage(page, event) {
+            event.preventDefault();
+
+            let siteWindow = document.getElementById("siteWindow");
+            let title = document.getElementById("pageTitle");
+            let content = document.getElementById("pageContent");
+
+            setTimeout(() => {
+                if (page === "home") {
+                    title.innerHTML = "🏠 Welcome to Home Page";
+                    content.innerHTML = "This is a basic webpage example showing how hypertext connects different pages.";
+                } else if (page === "about") {
+                    title.innerHTML = "📖 About Us";
+                    content.innerHTML = "We are an interactive learning platform demonstrating web technologies!";
+                } else if (page === "contact") {
+                    title.innerHTML = "📞 Contact Us";
+                    content.innerHTML = "Email us at: support@example.com";
+                }
+            }, 500);
+        }
+    </script>
+
+</body>
+</html>

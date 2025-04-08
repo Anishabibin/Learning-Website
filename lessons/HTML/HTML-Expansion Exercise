@@ -1,0 +1,51 @@
+<div style="margin-top: 40px; padding: 20px; border: 2px solid #ccc; border-radius: 10px; background-color: #fefefe; max-width: 600px; margin-left: auto; margin-right: auto; text-align: center;">
+  <h3 style="color: #444;">📝 Fill in the blanks: What does <strong>HTML</strong> stand for?</h3>
+
+  <div style="margin-bottom: 10px;">
+    <strong>HT</strong> — <input type="text" id="ht" placeholder="HyperText..." style="padding: 5px; width: 180px;" />
+  </div>
+  <div style="margin-bottom: 10px;">
+    <strong>M</strong> — <input type="text" id="m" placeholder="Markup..." style="padding: 5px; width: 180px;" />
+  </div>
+  <div style="margin-bottom: 10px;">
+    <strong>L</strong> — <input type="text" id="l" placeholder="Language..." style="padding: 5px; width: 180px;" />
+  </div>
+
+  <button 
+    onclick="checkBlanks()" 
+    style="margin-top: 10px; background-color: #4CAF50; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 6px; cursor: pointer;">
+    ✅ Check Answers
+  </button>
+
+  <p id="blankFeedback" style="font-weight: bold; font-size: 16px; margin-top: 15px;"></p>
+</div>
+
+<script>
+  function checkBlanks() {
+    const answers = {
+      ht: "hypertext",
+      m: "markup",
+      l: "language"
+    };
+
+    let correct = 0;
+    for (const key in answers) {
+      const input = document.getElementById(key);
+      if (input.value.trim().toLowerCase() === answers[key]) {
+        input.style.backgroundColor = "#c8f7c5";
+        correct++;
+      } else {
+        input.style.backgroundColor = "#f7c5c5";
+      }
+    }
+
+    const feedback = document.getElementById("blankFeedback");
+    if (correct === 3) {
+      feedback.textContent = "🎉 Perfect! You got all parts right!";
+      feedback.style.color = "green";
+    } else {
+      feedback.textContent = "❌ Some answers are incorrect. Try again!";
+      feedback.style.color = "red";
+    }
+  }
+</script>

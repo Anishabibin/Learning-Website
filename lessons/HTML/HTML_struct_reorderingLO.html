@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spot the Errors in HTML Structure – Analyze LO</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 20px;
+    }
+    h2 {
+      color: #2c3e50;
+      text-align: center;
+    }
+    .main-layout {
+      display: flex;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: flex-start;
+    }
+    .column {
+      flex: 1;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .instructions {
+      font-size: 1em;
+      color: #444;
+      line-height: 1.4;
+    }
+    .btn {
+      padding: 10px 20px;
+      margin: 10px 0;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+    #videoContainer {
+      display: none;
+      margin: 20px 0;
+      text-align: center;
+    }
+    video {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 8px;
+    }
+    #codeLines div {
+      padding: 8px 12px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-family: monospace;
+      text-align: left;
+      position: relative;
+    }
+    #codeLines div:hover {
+      background-color: #e6f2ff;
+    }
+    .selected {
+      background-color: #f8d7da;
+      border-left: 4px solid #dc3545;
+    }
+    .correct {
+      background-color: #d4edda;
+      border-left: 4px solid #28a745;
+    }
+    .wrong {
+      background-color: #f8d7da;
+      border-left: 4px solid #dc3545;
+    }
+    .line-feedback {
+      display: block;
+      font-size: 0.9em;
+      padding-top: 4px;
+      color: #333;
+      font-weight: bold;
+    }
+    #feedback {
+      font-weight: bold;
+      margin-top: 20px;
+      text-align: center;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+  <h2>🔍 Spot the Errors in HTML Document Structure</h2>
+  <div class="main-layout">
+    <!-- Left Column: Explanation -->
+    <div class="column">
+      <p class="instructions">
+        <strong>Bloom’s Level: Analyze</strong><br>
+        The code snippet on the right has <strong>two mistakes</strong> in its structure.<br>
+        Click the lines you think are incorrect. <br>
+        Then click <strong>"Check"</strong> to get feedback.<br>
+        Need help? Toggle the ISL video explanation below.
+      </p>
+      <button class="btn" onclick="toggleVideo()">👋 Show ISL Explanation</button>
+      <div id="videoContainer">
+        <video controls>
+          <source src="your-isl-video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <!-- Right Column: Game -->
+    <div class="column">
+      <div id="codeLines">
+        <div data-index="0">&lt;html&gt;<span class="line-feedback"></span></div>
+        <div data-index="1">&lt;!DOCTYPE html&gt;<span class="line-feedback"></span></div>
+        <div data-index="2">&lt;head&gt;<span class="line-feedback"></span></div>
+        <div data-index="3">&lt;title&gt;My Page&lt;/title&gt;<span class="line-feedback"></span></div>
+        <div data-index="4">&lt;body&gt;<span class="line-feedback"></span></div>
+        <div data-index="5">&lt;/head&gt;<span class="line-feedback"></span></div>
+        <div data-index="6">&lt;h1&gt;Welcome&lt;/h1&gt;<span class="line-feedback"></span></div>
+        <div data-index="7">&lt;/body&gt;<span class="line-feedback"></span></div>
+        <div data-index="8">&lt;/html&gt;<span class="line-feedback"></span></div>
+      </div>
+      <button class="btn" onclick="checkErrors()">✅ Check</button>
+      <button class="btn" onclick="resetPuzzle()">🔄 Try Again</button>
+      <div id="feedback"></div>
+    </div>
+  </div>
+
+  <script>
+    const wrongIndices = [0, 5]; // Mistakes: <html> is before <!DOCTYPE>, </head> is misplaced
+    const lines = document.querySelectorAll('#codeLines div');
+    let selected = new Set();
+
+    lines.forEach(line => {
+      line.addEventListener('click', () => {
+        const idx = parseInt(line.dataset.index);
+        if (selected.has(idx)) {
+          selected.delete(idx);
+          line.classList.remove('selected');
+        } else {
+          selected.add(idx);
+          line.classList.add('selected');
+        }
+      });
+    });
+
+    function checkErrors() {
+      let correctCount = 0;
+      const feedback = document.getElementById('feedback');
+
+      lines.forEach(line => {
+        const idx = parseInt(line.dataset.index);
+        const feedbackSpan = line.querySelector('.line-feedback');
+        line.classList.remove('correct', 'wrong');
+
+        if (wrongIndices.includes(idx)) {
+          if (selected.has(idx)) {
+            line.classList.add('correct');
+            feedbackSpan.textContent = "✅ Correct! This line has an error.";
+            correctCount++;
+          } else {
+            feedbackSpan.textContent = "";
+          }
+        } else if (selected.has(idx)) {
+          line.classList.add('wrong');
+          feedbackSpan.textContent = "❌ Incorrect. This line is not an error.";
+        } else {
+          feedbackSpan.textContent = "";
+        }
+      });
+
+      if (correctCount === wrongIndices.length && selected.size === wrongIndices.length) {
+        feedback.textContent = '🎉 Great! You found all the errors.';
+      } else {
+        feedback.textContent = '⚠️ Some selections are incorrect. Review again.';
+      }
+    }
+
+    function resetPuzzle() {
+      selected.clear();
+      document.getElementById('feedback').textContent = '';
+      lines.forEach(line => {
+        line.classList.remove('selected', 'correct', 'wrong');
+        line.querySelector('.line-feedback').textContent = '';
+      });
+    }
+
+    function toggleVideo() {
+      const vc = document.getElementById('videoContainer');
+      vc.style.display = vc.style.display === 'none' ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>

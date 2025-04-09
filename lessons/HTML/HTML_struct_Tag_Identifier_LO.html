@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Match HTML Tags – DHH Friendly</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #2c3e50;
+      text-align: center;
+    }
+
+    .instructions {
+      font-size: 1em;
+      color: #444;
+      margin: 10px auto;
+      text-align: center;
+      max-width: 750px;
+    }
+
+    .main-layout {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      margin: 20px auto;
+      max-width: 1200px;
+    }
+
+    .column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .box, .target {
+      padding: 10px;
+      background-color: #ffffff;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .box:hover, .target:hover {
+      background-color: #e6f2ff;
+    }
+
+    .matched {
+      background-color: #d4edda;
+      border-color: #28a745;
+      color: #155724;
+      font-weight: bold;
+    }
+
+    .wrong {
+      background-color: #f8d7da;
+      border-color: #dc3545;
+      color: #721c24;
+    }
+
+    .message {
+      font-size: 1.2em;
+      margin: 20px 0;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      display: block;
+      margin: 10px auto;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    #videoContainer {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    video {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h2>🎯 Match HTML Tags to Their Meaning</h2>
+  <p class="instructions">
+    Click on a tag from the left, then click its meaning on the right.<br>
+    Match all correctly to complete the task.
+  </p>
+  <button class="btn" onclick="toggleVideo()">👋 Need Help? Show Sign Language Video</button>
+
+  <div id="videoContainer">
+    <video controls>
+      <source src="your-sign-language-video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <div class="main-layout">
+    <div class="column" id="tags">
+      <div class="box" data-match="html">&lt;html&gt;</div>
+      <div class="box" data-match="head">&lt;head&gt;</div>
+      <div class="box" data-match="title">&lt;title&gt;</div>
+      <div class="box" data-match="body">&lt;body&gt;</div>
+      <div class="box" data-match="h1">&lt;h1&gt;</div>
+    </div>
+
+    <div class="column" id="definitions">
+      <div class="target" data-match="html">Starts the HTML document</div>
+      <div class="target" data-match="head">Has information about the page</div>
+      <div class="target" data-match="title">Shows in the browser's title bar</div>
+      <div class="target" data-match="body">The content you see on the page</div>
+      <div class="target" data-match="h1">Main heading shown in the body</div>
+    </div>
+  </div>
+
+  <div class="message" id="message"></div>
+  <button class="btn" onclick="resetGame()">🔁 Try Again</button>
+
+  <script>
+    let selectedBox = null;
+    let correctMatches = 0;
+    let wrongAttempts = 0;
+    const maxWrongAttempts = 3;
+
+    function toggleVideo() {
+      const vid = document.getElementById('videoContainer');
+      vid.style.display = vid.style.display === 'none' ? 'block' : 'none';
+    }
+
+    document.querySelectorAll('.box').forEach(box => {
+      box.addEventListener('click', () => {
+        selectedBox = box;
+        document.querySelectorAll('.box').forEach(b => b.style.borderColor = '#ccc');
+        box.style.borderColor = '#007bff';
+      });
+    });
+
+    document.querySelectorAll('.target').forEach(target => {
+      target.addEventListener('click', () => {
+        if (!selectedBox) return;
+
+        const match1 = selectedBox.getAttribute('data-match');
+        const match2 = target.getAttribute('data-match');
+
+        if (match1 === match2) {
+          selectedBox.classList.add('matched');
+          target.classList.add('matched');
+          selectedBox.style.pointerEvents = "none";
+          target.style.pointerEvents = "none";
+          correctMatches++;
+
+          if (correctMatches === 5) {
+            document.getElementById("message").innerText = "✅ Great job! You've matched all tags correctly!";
+          }
+        } else {
+          target.classList.add('wrong');
+          setTimeout(() => target.classList.remove('wrong'), 800);
+          wrongAttempts++;
+          if (wrongAttempts >= maxWrongAttempts) {
+            document.getElementById("message").innerText = "❗ You seem stuck. Let's try a different activity or get more help.";
+          }
+        }
+
+        selectedBox.style.borderColor = '#ccc';
+        selectedBox = null;
+      });
+    });
+
+    function resetGame() {
+      correctMatches = 0;
+      wrongAttempts = 0;
+      document.getElementById("message").innerText = "";
+      selectedBox = null;
+      document.querySelectorAll('.box, .target').forEach(el => {
+        el.classList.remove('matched', 'wrong');
+        el.style.pointerEvents = "auto";
+        el.style.borderColor = '#ccc';
+      });
+    }
+
+// Shuffle target definitions
+function shuffleTargets() {
+  const targetContainer = document.getElementById("definitions");
+  const targets = Array.from(targetContainer.children);
+
+  for (let i = targets.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [targets[i], targets[j]] = [targets[j], targets[i]];
+  }
+
+  targets.forEach(target => targetContainer.appendChild(target));
+}
+
+// Call it when page loads
+window.onload = function () {
+  shuffleTargets();
+};
+
+  </script>
+</body>
+</html>

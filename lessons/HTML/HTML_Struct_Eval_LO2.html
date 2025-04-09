@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🌟 Evaluate HTML Structure – Partially Fill the Tags</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #eaf6ff;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .instruction {
+      font-size: 1.1em;
+      background: #f0f8ff;
+      border-left: 5px solid #007acc;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+    }
+
+    .code-block {
+      background: #f7f9fb;
+      padding: 20px;
+      font-family: 'Courier New', monospace;
+      border-radius: 10px;
+      font-size: 1em;
+      line-height: 2em;
+      color: #333;
+    }
+
+    input[type="text"] {
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-family: monospace;
+      font-size: 1em;
+      width: 110px;
+      text-align: center;
+      transition: border 0.3s;
+    }
+
+    input.correct {
+      border-color: #28a745;
+      background-color: #e7f9ef;
+    }
+
+    input.incorrect {
+      border-color: #dc3545;
+      background-color: #fdecea;
+    }
+
+    .btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      background: #0056b3;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 1.1em;
+      text-align: center;
+    }
+
+    .correct-msg {
+      color: #28a745;
+    }
+
+    .wrong-msg {
+      color: #dc3545;
+    }
+
+    .isl-toggle {
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .isl-toggle button {
+      background: #00a8e8;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 0.95em;
+      cursor: pointer;
+    }
+
+    #islVideo {
+      display: none;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    #islVideo video {
+      width: 100%;
+      max-width: 480px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🧠 Evaluate: Complete the HTML Structure</h2>
+
+    <div class="instruction">
+      Fill in the <strong>missing HTML tags</strong> to complete this partially given structure. <br>
+      Use lowercase tags only. <br>
+      Need help? Watch the ISL explanation below.
+    </div>
+
+    <div class="isl-toggle">
+      <button onclick="toggleVideo()">🎥 Toggle ISL Explanation</button>
+      <div id="islVideo">
+        <video controls>
+          <source src="isl-html-structure.mp4" type="video/mp4">
+          ISL video explanation will play here.
+        </video>
+      </div>
+    </div>
+
+    <div class="code-block">
+      &lt;!DOCTYPE html&gt;<br>
+      &lt;html&gt;<br>
+      &nbsp;&nbsp;&lt;head&gt;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;<input type="text" id="t1" placeholder="Page title" />&lt;/title&gt;<br>
+      &nbsp;&nbsp;&lt;/head&gt;<br>
+      &nbsp;&nbsp;&lt;<input type="text" id="t2" placeholder="tag" />> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;<input type="text" id="t3" placeholder="Heading text" />&lt;/h1&gt;<br>
+      &nbsp;&nbsp;&lt;/<input type="text" id="t4" placeholder="tag" />> <br>
+      &lt;/html&gt;
+    </div>
+
+    <div style="text-align:center;">
+      <button class="btn" onclick="checkAnswers()">✅ Check Answers</button>
+    </div>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const answers = {
+      t1: "My Page",
+      t2: "body",
+      t3: "Welcome",
+      t4: "body"
+    };
+
+    function checkAnswers() {
+      let correct = 0;
+      let total = Object.keys(answers).length;
+
+      for (let id in answers) {
+        const input = document.getElementById(id);
+        const val = input.value.trim();
+
+        input.classList.remove("correct", "incorrect");
+
+        if (val.toLowerCase() === answers[id].toLowerCase()) {
+          input.classList.add("correct");
+          correct++;
+        } else {
+          input.classList.add("incorrect");
+        }
+      }
+
+      const result = document.getElementById("result");
+      if (correct === total) {
+        result.innerHTML = "<span class='correct-msg'>🎉 Excellent! You've completed the structure correctly.</span>";
+      } else {
+        result.innerHTML = `<span class='wrong-msg'>🔍 ${correct}/${total} correct. Keep trying!</span>`;
+      }
+    }
+
+    function toggleVideo() {
+      const video = document.getElementById("islVideo");
+      video.style.display = video.style.display === "none" ? "block" : "none";
+    }
+  </script>
+</body>
+</html>

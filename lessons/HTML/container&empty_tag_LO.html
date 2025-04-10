@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Container vs Empty Tag Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1faff;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .question-box {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .options button {
+      padding: 10px 15px;
+      margin: 10px 10px 0 0;
+      font-size: 1em;
+      border-radius: 5px;
+      border: none;
+      background-color: #d9ecff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .options button:hover {
+      background-color: #a8d4ff;
+    }
+
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    .correct {
+      color: green;
+    }
+
+    .incorrect {
+      color: red;
+    }
+
+    .retry-btn {
+      margin-top: 10px;
+      padding: 6px 12px;
+      background-color: #ffc107;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h2>🧏‍♀️ Identify the Tag Type</h2>
+
+  <!-- Question 1: Container Tag -->
+  <div class="question-box" id="q1">
+    <p><strong>Q1:</strong> Which of the following is a <span style="color: green;"><strong>container tag</strong></span>?</p>
+    <div class="options">
+      <button onclick="checkAnswer(this, true, 'q1')">&lt;p&gt;Welcome&lt;/p&gt;</button>
+      <button onclick="checkAnswer(this, false, 'q1')">&lt;br&gt;</button>
+      <button onclick="checkAnswer(this, false, 'q1')">&lt;img src="img.jpg"&gt;</button>
+    </div>
+    <div class="feedback" id="feedback-q1"></div>
+  </div>
+
+  <!-- Question 2: Empty Tag -->
+  <div class="question-box" id="q2">
+    <p><strong>Q2:</strong> Which of the following is an <span style="color: orange;"><strong>empty tag</strong></span>?</p>
+    <div class="options">
+      <button onclick="checkAnswer(this, false, 'q2')">&lt;div&gt;Content&lt;/div&gt;</button>
+      <button onclick="checkAnswer(this, true, 'q2')">&lt;br&gt;</button>
+      <button onclick="checkAnswer(this, false, 'q2')">&lt;ul&gt;&lt;li&gt;Item&lt;/li&gt;&lt;/ul&gt;</button>
+    </div>
+    <div class="feedback" id="feedback-q2"></div>
+  </div>
+
+  <script>
+    function checkAnswer(button, isCorrect, qId) {
+      const feedback = document.getElementById("feedback-" + qId);
+      if (isCorrect) {
+        feedback.innerHTML = "<span class='correct'>✅ Correct!</span>";
+      } else {
+        feedback.innerHTML = "<span class='incorrect'>❌ Try Again</span> <button class='retry-btn' onclick='resetQuestion(\"" + qId + "\")'>Retry</button>";
+      }
+
+      // Disable all buttons after click
+      const btns = document.querySelectorAll("#" + qId + " .options button");
+      btns.forEach(btn => btn.disabled = true);
+    }
+
+    function resetQuestion(qId) {
+      const feedback = document.getElementById("feedback-" + qId);
+      feedback.innerHTML = "";
+
+      const btns = document.querySelectorAll("#" + qId + " .options button");
+      btns.forEach(btn => btn.disabled = false);
+    }
+  </script>
+
+</body>
+</html>

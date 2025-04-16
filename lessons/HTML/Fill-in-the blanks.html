@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fill in the Blank - HTML Heading End Tag</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6fb;
+            margin: 2em;
+            color: #333;
+        }
+        .exercise {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .question {
+            font-weight: bold;
+            font-size: 1.5em;
+            color: #2575fc;
+            margin-bottom: 1em;
+        }
+        .question-text {
+            font-size: 1.2em;
+            background: #eef3fd;
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 1em;
+        }
+        .input-box {
+            font-size: 1.2em;
+            padding: 10px;
+            border: 2px solid #2575fc;
+            border-radius: 5px;
+            width: 220px;
+        }
+        .submit-btn {
+            padding: 10px 20px;
+            background-color: #2575fc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-top: 1.5em;
+        }
+        .submit-btn:hover {
+            background-color: #1e61b2;
+        }
+        .result {
+            margin-top: 1em;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .result.correct {
+            color: green;
+        }
+        .result.incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="exercise">
+        <div class="question">
+            Fill in the blank below with the correct closing HTML tag:
+        </div>
+        <form id="fillBlankForm">
+            <div class="question-text">
+                <code>&lt;h1&gt;This is a heading</code>
+            </div>
+            <div class="question-input">
+                <input type="text" id="endTagInput" class="input-box" placeholder="e.g. </h1>">
+            </div>
+            <button type="button" class="submit-btn" onclick="checkAnswer()">Submit</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function checkAnswer() {
+            const endTagInput = document.getElementById('endTagInput');
+            const result = document.getElementById('result');
+            const answer = endTagInput.value.trim();
+
+            if (answer.toLowerCase() === "</h1>") {
+                result.textContent = 'Correct!';
+                result.className = 'result correct';
+            } else if (answer === "") {
+                result.textContent = 'Please enter an end tag.';
+                result.className = 'result';
+            } else {
+                result.textContent = 'Incorrect. The correct answer is </h1>.';
+                result.className = 'result incorrect';
+            }
+        }
+    </script>
+</body>
+</html>

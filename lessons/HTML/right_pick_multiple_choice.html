@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML Tags MCQ - Heading Element</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: grey;
+            margin: 2em;
+            color: #333;
+        }
+        .exercise {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .question {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #2575fc;
+        }
+        .options {
+            margin-top: 1em;
+        }
+        .option {
+            margin: 1em 0;
+            display: flex;
+            align-items: center;
+        }
+        .option input {
+            margin-right: 10px;
+        }
+        .option label {
+            font-size: 1.1em;
+        }
+        .submit-btn {
+            padding: 10px 20px;
+            background-color: #2575fc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-top: 1.5em;
+        }
+        .submit-btn:hover {
+            background-color: #1e61b2;
+        }
+        .result {
+            margin-top: 1em;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .result.correct {
+            color: green;
+        }
+        .result.incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="exercise">
+        <div class="question">
+            Which of the following is the correct way to write the &lt;h1 &gt; tag in HTML?
+        </div>
+        <form id="mcqForm">
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="answer" value="A" id="optA">
+                    <label for="optA">&lt;h1&gt;This is a heading&lt;/h1&gt;</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="answer" value="B" id="optB">
+                    <label for="optB">&lt;h1&gt;This is a heading&lt;//h1&gt;</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="answer" value="C" id="optC">
+                    <label for="optC">&lt;h1&gt;This is a heading /&gt;</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="answer" value="D" id="optD">
+                    <label for="optD">&lt;h1&gt;This is a heading</label>
+                </div>
+            </div>
+            <button type="button" class="submit-btn" onclick="checkAnswer()">Submit</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function checkAnswer() {
+            const form = document.getElementById('mcqForm');
+            const result = document.getElementById('result');
+            const selected = form.answer.value;
+
+            if (!selected) {
+                result.textContent = 'Please select an option.';
+                result.className = 'result';
+                return;
+            }
+
+            if (selected === 'A') {
+                result.textContent = 'Correct!';
+                result.className = 'result correct';
+            } else {
+                result.textContent = 'Incorrect. The correct answer is A.';
+                result.className = 'result incorrect';
+            }
+        }
+    </script>
+</body>
+</html>

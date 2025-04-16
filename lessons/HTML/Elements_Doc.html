@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HTML Elements - Learning Module</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f6fb;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      color: #2575fc;
+    }
+
+    .section {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    .editor {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .code-editor, iframe {
+      flex: 1;
+      height: 300px;
+      font-family: monospace;
+      font-size: 14px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #f9f9f9;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow: auto;
+    }
+
+    iframe {
+      background-color: white;
+    }
+
+    .highlight-line {
+      background-color: #ffb3b3;
+      border-left: 5px solid red;
+      display: block;
+      padding-left: 5px;
+    }
+
+    .button {
+      padding: 10px 20px;
+      background-color: #ffcc00;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .isl-toggle {
+      margin-top: 15px;
+    }
+
+    .isl-video {
+      margin-top: 15px;
+      display: none;
+    }
+
+    .input-placeholder {
+      border: 1px dashed #aaa;
+      padding: 5px;
+      display: inline-block;
+      width: 100px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="section">
+    <h1>HTML Elements</h1>
+    <p><strong>What is an HTML Element?</strong> It includes a <strong>start tag</strong>, some <strong>content</strong>, and an <strong>end tag</strong>.</p>
+    <p><code>&lt;tagname&gt;Content goes here...&lt;/tagname&gt;</code></p>
+
+    <h3>Examples:</h3>
+    <table>
+      <tr>
+        <th>Start Tag</th>
+        <th>Content</th>
+        <th>End Tag</th>
+      </tr>
+      <tr>
+        <td>&lt;h1&gt;</td>
+        <td>My First Heading</td>
+        <td>&lt;/h1&gt;</td>
+      </tr>
+      <tr>
+        <td>&lt;p&gt;</td>
+        <td>My first paragraph.</td>
+        <td>&lt;/p&gt;</td>
+      </tr>
+      <tr>
+        <td>&lt;br&gt;</td>
+        <td>None</td>
+        <td>None</td>
+      </tr>
+    </table>
+
+    <div class="isl-toggle">
+      <button class="button" onclick="toggleISL()">Show ISL Explanation</button>
+      <div class="isl-video" id="islVideo">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/YXjhqw25PMs?start=112&end=240" title="ISL Explanation" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="section editor">
+    <div class="code-editor" id="codeEditor" contenteditable="true">
+&lt;html&gt;
+  &lt;body&gt;
+    <span class="highlight-line">&lt;h1&gt;My First Heading</span>
+    <span class="input-placeholder" contenteditable="true" id="endH1Box">&lt;/h1&gt;</span>
+    <span class="highlight-line">&lt;p&gt;This is my paragraph without closing the tag...</span>
+    <span class="input-placeholder" contenteditable="true" id="endPBox">&lt;/p&gt;</span>
+  &lt;/body&gt;
+&lt;/html&gt;
+    </div>
+    <iframe id="previewFrame"></iframe>
+  </div>
+
+  <div class="section">
+    <button class="button" onclick="highlightExample()">Run the Code</button>
+  </div>
+
+  <script>
+    function toggleISL() {
+      const video = document.getElementById("islVideo");
+      video.style.display = video.style.display === "none" ? "block" : "none";
+    }
+
+    function updatePreview() {
+      const editor = document.getElementById("codeEditor");
+      const endPInput = document.getElementById("endPBox");
+      const endH1Input = document.getElementById("endH1Box");
+      const preview = document.getElementById("previewFrame");
+      preview.srcdoc = editor.innerText;
+
+      if (endPInput && endPInput.innerText.includes("</p>")) {
+        endPInput.previousElementSibling.classList.remove("highlight-line");
+        endPInput.style.display = 'none';
+      }
+
+      if (endH1Input && endH1Input.innerText.includes("</h1>")) {
+        endH1Input.previousElementSibling.classList.remove("highlight-line");
+        endH1Input.style.display = 'none';
+      }
+    }
+
+    function highlightExample() {
+      updatePreview();
+    }
+
+    document.getElementById("codeEditor").addEventListener("input", updatePreview);
+    updatePreview();
+  </script>
+
+</body>
+</html>

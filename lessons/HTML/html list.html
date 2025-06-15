@@ -80,11 +80,11 @@
 
   <h2>📝 Learn HTML Lists with ISL Support</h2>
 
-	
   <select id="listType" onchange="loadContent()">
     <option value="">-- Select List Type --</option>
     <option value="ul">Unordered List</option>
     <option value="ol">Ordered List</option>
+    <option value="dl">Definition List</option>
   </select>
 
   <div class="video-container">
@@ -116,7 +116,7 @@
     </ul>
   </body>
 </html>`,
-        video: "https://www.youtube.com/embed/Jjhr7xFQd5U" // Example: UL video
+        video: "https://www.youtube.com/embed/Jjhr7xFQd5U"
       },
       ol: {
         code: `<!DOCTYPE html>
@@ -130,7 +130,22 @@
     </ol>
   </body>
 </html>`,
-        video: "https://www.youtube.com/embed/y8ntgNf8-4g" // Example: OL video
+        video: "https://www.youtube.com/embed/y8ntgNf8-4g"
+      },
+      dl: {
+        code: `<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Definition List</h2>
+    <dl>
+      <dt>HTML</dt>
+      <dd>HyperText Markup Language</dd>
+      <dt>CSS</dt>
+      <dd>Cascading Style Sheets</dd>
+    </dl>
+  </body>
+</html>`,
+        video: "https://www.youtube.com/embed/S4xGvV7v390" // Example definition list ISL video
       }
     };
 

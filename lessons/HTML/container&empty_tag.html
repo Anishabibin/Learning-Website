@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Empty and Container Tags - DHH Friendly Note</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #eef3f7;
+      padding: 30px;
+      color: #333;
+      line-height: 1.6;
+    }
+    .card {
+      background-color: #ffffff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #004085;
+    }
+    .video-button-section {
+      text-align: center;
+      margin-top: -10px;
+      margin-bottom: 15px;
+    }
+    .video-container {
+      display: none;
+      text-align: right;
+      margin-top: 10px;
+    }
+    button {
+      padding: 8px 16px;
+      font-size: 14px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    video {
+      width: 300px;
+      border-radius: 10px;
+    }
+    .section-title {
+      color: #0056b3;
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+    .example-box {
+      background-color: #e8f4ff;
+      padding: 10px;
+      border-left: 5px solid #007bff;
+      font-family: monospace;
+      border-radius: 6px;
+      margin: 8px 0;
+    }
+    .highlight {
+      background-color: #fff3cd;
+      padding: 5px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>📘 Learn HTML Tags: Container vs Empty</h2>
+
+    <!-- Button and video section placed just after heading -->
+    <div class="isl-toggle">
+      <button class="button" onclick="toggleISL()">Show ISL Explanation</button>
+      <div class="isl-video" id="islVideo">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/v0B0qUdR4lc?si=6xnokz7kf-mPkhTr" title="ISL Explanation" allowfullscreen>	</iframe>
+      </div>
+    </div>
+  </div>
+
+    </div>
+
+    <p><span class="highlight">What is a Tag?</span>  
+      A tag is a special keyword used in HTML to structure web pages. Tags are written inside angle brackets like <code>&lt; &gt;</code>.
+    </p>
+
+    <div class="section-title">🟦 <strong> Container Tags </strong></div>
+    <p>These tags come in <strong> pairs. One opens, and the other closes.</strong> </p>
+    <div class="example-box">&lt;p&gt;This is a paragraph&lt;/p&gt;</div>
+
+    <div class="section-title">🟨<strong> Empty Tags</strong></div>
+    <p>Empty tags are written <strong>only once and do not need a closing tag.</strong></p>
+    <div class="example-box">&lt;br&gt;  (Line Break)</div>
+    <div class="example-box">&lt;img src="image.jpg"&gt;  (Image Tag)</div>
+  </div>
+
+  <script>
+    function toggleISL() {
+      const container = document.getElementById('islVideo');
+      container.style.display = container.style.display === 'none' ? 'block' : 'none';
+    }
+  </script>
+
+</body>
+</html>

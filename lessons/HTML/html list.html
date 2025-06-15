@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HTML Lists with ISL Support</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #003366;
+      margin-bottom: 10px;
+    }
+
+    select {
+      font-size: 16px;
+      padding: 8px 12px;
+      margin-bottom: 20px;
+    }
+
+    .video-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 20px;
+    }
+
+    .video-container iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-radius: 10px;
+    }
+
+    .editor-output-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .editor, .output {
+      flex: 1 1 45%;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      min-width: 300px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 200px;
+      font-size: 16px;
+      font-family: monospace;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    iframe.output-frame {
+      width: 100%;
+      height: 200px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: white;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📝 Learn HTML Lists with ISL Support</h2>
+
+	
+  <select id="listType" onchange="loadContent()">
+    <option value="">-- Select List Type --</option>
+    <option value="ul">Unordered List</option>
+    <option value="ol">Ordered List</option>
+  </select>
+
+  <div class="video-container">
+    <iframe id="videoFrame" src="https://www.youtube.com/embed/D3VvFL4jwCU?si=7rHlsJgvyiNgsU8m" allowfullscreen></iframe>
+  </div>
+
+  <div class="editor-output-container">
+    <div class="editor">
+      <h3>✍️ Try the Code</h3>
+      <textarea id="codeEditor" oninput="updatePreview()"></textarea>
+    </div>
+    <div class="output">
+      <h3>🌐 Output</h3>
+      <iframe id="outputFrame" class="output-frame"></iframe>
+    </div>
+  </div>
+
+  <script>
+    const listExamples = {
+      ul: {
+        code: `<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Unordered List</h2>
+    <ul>
+      <li>Apple</li>
+      <li>Banana</li>
+      <li>Cherry</li>
+    </ul>
+  </body>
+</html>`,
+        video: "https://www.youtube.com/embed/Jjhr7xFQd5U" // Example: UL video
+      },
+      ol: {
+        code: `<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Ordered List</h2>
+    <ol>
+      <li>First Step</li>
+      <li>Second Step</li>
+      <li>Third Step</li>
+    </ol>
+  </body>
+</html>`,
+        video: "https://www.youtube.com/embed/y8ntgNf8-4g" // Example: OL video
+      }
+    };
+
+    function loadContent() {
+      const type = document.getElementById("listType").value;
+      const editor = document.getElementById("codeEditor");
+      const output = document.getElementById("outputFrame");
+      const video = document.getElementById("videoFrame");
+
+      if (listExamples[type]) {
+        editor.value = listExamples[type].code;
+        output.srcdoc = listExamples[type].code;
+        video.src = listExamples[type].video;
+      } else {
+        editor.value = '';
+        output.srcdoc = '';
+        video.src = '';
+      }
+    }
+
+    function updatePreview() {
+      const updatedCode = document.getElementById("codeEditor").value;
+      document.getElementById("outputFrame").srcdoc = updatedCode;
+    }
+  </script>
+
+</body>
+</html>

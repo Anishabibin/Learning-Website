@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Insert Images with IMG Tag - ISL Friendly</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .toggle-btn {
+      margin-bottom: 15px;
+      padding: 8px 16px;
+      font-size: 14px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .isl-video {
+      width: 100%;
+      max-width: 800px;
+      height: 300px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .container {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+      max-width: 1000px;
+      flex-wrap: wrap;
+    }
+
+    .editor, .output {
+      flex: 1 1 45%;
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      min-width: 300px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 200px;
+      font-family: monospace;
+      font-size: 16px;
+    }
+
+    iframe.output-frame {
+      width: 100%;
+      height: 200px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🖼️ Learn to Insert Images using &lt;img&gt; Tag</h2>
+
+  <button class="toggle-btn" onclick="toggleISL()">🔁 Toggle ISL Explanation</button>
+
+  <!-- Replace YOUR_VIDEO_ID with actual YouTube video ID -->
+  <iframe id="islVideo" class="isl-video" src="https://www.youtube.com/embed/uU2ltWTRwxc?si=dKybvCC2vqZWfuHz" allowfullscreen></iframe>
+
+  <div class="container">
+    <div class="editor">
+      <h3>✍️ Try the Code</h3>
+      <textarea id="codeEditor" oninput="updatePreview()">
+<p>Here is an image:</p>
+
+<img src="D:\Adam\bday toppers\il_794xN.3158831292_kbac.webp" alt="Topper" width="200">
+
+      </textarea>
+    </div>
+
+    <div class="output">
+      <h3>🌐 Output</h3>
+      <iframe id="previewFrame" class="output-frame"></iframe>
+    </div>
+  </div>
+
+  <script>
+    function updatePreview() {
+      const code = document.getElementById('codeEditor').value;
+      document.getElementById('previewFrame').srcdoc = code;
+    }
+
+    function toggleISL() {
+      const video = document.getElementById('islVideo');
+      video.style.display = video.style.display === 'none' ? 'block' : 'none';
+    }
+
+    window.onload = updatePreview;
+  </script>
+
+</body>
+</html>
